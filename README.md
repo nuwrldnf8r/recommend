@@ -12,7 +12,7 @@
 - User3 likes a,b,e,f,g
 - User4 likes a,b,c,g,h,i,j
 
-We find matches for user 1  -> User3, User4, and add up the scores of the search reults for the items that User1 doesn't have. (e,f,g and g,h,i,j)
+We find matches for user 1  -> User3, User4, and add up the scores of the search results for the items that User1 doesn't have. (e,f,g and g,h,i,j)
 
 - /test/add_recommendation.js is an example of adding likes for a couple of users. Obviously this would happen individually.
 - /test/get_recommendation.js returns some recommendations for user1
