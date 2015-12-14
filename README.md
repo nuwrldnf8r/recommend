@@ -3,7 +3,7 @@
 ## Dependancies:
 - request.js  (npm install request)
 - elasticsearch.js (npm install elasticsearch)
-- restify (npm install elasticsearch)
+- restify.js (npm install elasticsearch)
 
 ## How it works
 
