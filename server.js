@@ -74,6 +74,21 @@ server.get('/recommendation/:domain/:listname/:userid', function(req,res,next){
     });
 });
 
+server.get('/recommendation/:domain/:listname/item/:itemid', function(req,res,next){
+    var domain = req.params.domain;
+    var listname = req.params.listname;
+    var itemid = req.params.itemid;
+
+    recommendation.getRecommendationForItem(domain,listname,itemid,function(err,ret){
+        if(!err){
+            res.send(ret);
+        }
+        else{
+            res.send({error:err});
+        }
+    });
+});
+
 
 
 server.listen(config.service.port);
