@@ -3,6 +3,6 @@
  */
 var request = require('request');
 
-request.get('http://localhost:8080/recommendation/test/likes/item/2',function(err,ret,body){
+request.get('http://localhost:8080/recommendation/test/likes?list=2,3',function(err,ret,body){
     console.log(body);
 });

@@ -19,7 +19,7 @@ server.use(restify.bodyParser());
 
 
 
-//domain, listname, userid, list
+//adds  a list of items to a user for a given action
 server.post('/:domain/:listname/:userid', function(req,res,next){
     var list = req.params.list;
     if(typeof(list)==='string'){
@@ -42,6 +42,35 @@ server.post('/:domain/:listname/:userid', function(req,res,next){
 
 });
 
+//returns a list of recommendations for a list of itemids eg: /recommendation/test/likes?list=1,2
+//we would use this when we don't know who the user is
+server.get('/recommendation/:domain/:listname', function(req,res,next){
+    var list = req.params.list;
+    var domain = req.params.domain;
+    var listname = req.params.listname;
+
+    if(list) {
+        var itemlist = list.split(',');
+        if(itemlist.length>0) {
+            recommendation.getRecommendationForItems(domain, listname, itemlist, function (err, ret) {
+                if (!err) {
+                    res.send(ret);
+                }
+                else {
+                    res.send({error: err});
+                }
+            });
+        }
+        else{
+            res.send([]);
+        }
+    }
+    else{
+        res.send({error:'no list'});
+    }
+});
+
+//returns a list of recommendations for a user (for a given domain and list)
 server.get('/:domain/:listname/:userid', function(req,res,next){
     var domain = req.params.domain;
     var listname = req.params.listname;
@@ -58,28 +87,15 @@ server.get('/:domain/:listname/:userid', function(req,res,next){
 
 });
 
-//domain, listname, userid
+
+
+//returns a list of recommendations for a user
 server.get('/recommendation/:domain/:listname/:userid', function(req,res,next){
     var domain = req.params.domain;
     var listname = req.params.listname;
     var userid = req.params.userid;
 
     recommendation.getRecommendations(domain,listname,userid,function(err,ret){
-        if(!err){
-            res.send(ret);
-        }
-        else{
-            res.send({error:err});
-        }
-    });
-});
-
-server.get('/recommendation/:domain/:listname/item/:itemid', function(req,res,next){
-    var domain = req.params.domain;
-    var listname = req.params.listname;
-    var itemid = req.params.itemid;
-
-    recommendation.getRecommendationForItem(domain,listname,itemid,function(err,ret){
         if(!err){
             res.send(ret);
         }
